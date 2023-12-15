@@ -1,0 +1,452 @@
+function varargout = kualanamu(varargin)
+% KUALANAMU MATLAB code for kualanamu.fig
+%      KUALANAMU, by itself, creates a new KUALANAMU or raises the existing
+%      singleton*.
+%
+%      H = KUALANAMU returns the handle to a new KUALANAMU or the handle to
+%      the existing singleton*.
+%
+%      KUALANAMU('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in KUALANAMU.M with the given input arguments.
+%
+%      KUALANAMU('Property','Value',...) creates a new KUALANAMU or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before kualanamu_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to kualanamu_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help kualanamu
+
+% Last Modified by GUIDE v2.5 30-Nov-2023 16:50:21
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @kualanamu_OpeningFcn, ...
+                   'gui_OutputFcn',  @kualanamu_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before kualanamu is made visible.
+function kualanamu_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to kualanamu (see VARARGIN)
+
+% Choose default command line output for kualanamu
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes kualanamu wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = kualanamu_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes on button press in pushbutton1.
+function pushbutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% OPEN IMAGE 1
+[FileName,PathName]= uigetfile(...
+    {'*.bmp;*.jpg;*.jpeg;*.png;*.tiff;*.gif', 'File of Type(*.bmp,*.jpg,*.jpeg,*.png,*.tiff,*.gif)';
+    '*.bmp', 'File Bitmap(*.bmp)';...
+    '*.jpg', 'File Jpg(*.jpg)';...
+    '*.jpeg', 'File Jpeg(*.jpeg)';...
+    '*.png', 'File PNG(*.png)';...
+    '*.tiff', 'File TIF(*.tif)';...
+    '*.gif', 'File GIF(*.gif)';...
+    '*.*', 'All type(*.*)'},...
+    'Open Image');
+if ~isequal (FileName, 0)
+    handles.data1 = imread(fullfile(PathName,FileName));
+    guidata (hObject, handles);
+    axes(handles.axes1);
+    imshow(handles.data1);
+else
+    return
+end
+
+
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% OPEN IMAGE 2
+[FileName,PathName]= uigetfile(...
+    {'*.bmp;*.jpg;*.jpeg;*.png;*.tiff;*.gif', 'File of Type(*.bmp,*.jpg,*.jpeg,*.png,*.tiff,*.gif)';
+    '*.bmp', 'File Bitmap(*.bmp)';...
+    '*.jpg', 'File Jpg(*.jpg)';...
+    '*.jpeg', 'File Jpeg(*.jpeg)';...
+    '*.png', 'File PNG(*.png)';...
+    '*.tiff', 'File TIF(*.tif)';...
+    '*.gif', 'File GIF(*.gif)';...
+    '*.*', 'All type(*.*)'},...
+    'Open Image');
+if ~isequal (FileName, 0)
+    handles.data2 = imread(fullfile(PathName,FileName));
+    guidata (hObject, handles);
+    axes(handles.axes2);
+    imshow(handles.data2);
+else
+    return
+end
+
+
+
+% --- Executes on button press in pushbutton3.
+function pushbutton3_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% SAVE IMAGE
+save = handles.data3;
+[filename, pathname] = uiputfile(...
+    {'*.jpg','File Jpeg(*.jpg)';...
+    '*.bmp', 'File Bitmap(*.bmp)';...
+    '*.png', 'File PNG(*.png)';...
+    '*.tif','File Tif(*.tif)';
+    '*.*','All Files(*.*)'},...
+    'Save Image');
+
+if ~isequal(filename,0)
+    imwrite(save, fullfile(pathname,filename));
+else
+    return
+end
+
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% GRAYSCALE
+image1 = handles.data1;
+gray = rgb2gray(image1);
+axes(handles.axes3);
+imshow(gray);
+handles.data3 = gray;
+guidata(hObject,handles);
+% GRAYSCALE
+image2 = handles.data2;
+gray = rgb2gray(image2);
+axes(handles.axes3);
+imshow(gray);
+handles.data3 = gray;
+guidata(hObject,handles);
+
+
+% --- Executes on button press in pushbutton5.
+function pushbutton5_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% BLACK AND WHITE
+image1 = handles.data1;
+bw = im2bw(image1);
+axes(handles.axes2);
+imshow(bw);
+handles.data3 = bw;
+guidata(hObject,handles);
+% BLACK AND WHITE
+image2 = handles.data2;
+bw = im2bw(image2);
+axes(handles.axes3);
+imshow(bw);
+handles.data3 = bw;
+guidata(hObject,handles);
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% RED LAYER
+image1 = handles.data1;
+allBlack = zeros(size(image1,1),size(image1,2));
+
+red = image1(:,:,1);
+ired = cat(3,red,allBlack,allBlack);
+
+axes(handles.axes3);
+imshow(ired);
+handles.data3 = ired;
+guidata(hObject,handles);
+% RED LAYER
+image2 = handles.data2;
+allBlack = zeros(size(image2,1),size(image2,2));
+
+red = image2(:,:,1);
+ired = cat(3,red,allBlack,allBlack);
+
+axes(handles.axes3);
+imshow(ired);
+handles.data3 = ired;
+guidata(hObject,handles);
+
+% --- Executes on button press in pushbutton7.
+function pushbutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% GREEN LAYER
+image1 = handles.data1;
+allBlack = zeros(size(image1,1),size(image1,2));
+
+green = image1(:,:,1);
+igreen = cat(3,allBlack,green,allBlack);
+
+axes(handles.axes3);
+imshow(igreen);
+handles.data3 = igreen;
+guidata(hObject,handles);
+% GREEN LAYER
+image2 = handles.data2;
+allBlack = zeros(size(image2,1),size(image2,2));
+
+green = image2(:,:,1);
+igreen = cat(3,allBlack,green,allBlack);
+
+axes(handles.axes3);
+imshow(igreen);
+handles.data3 = igreen;
+guidata(hObject,handles);
+
+% --- Executes on button press in pushbutton8.
+function pushbutton8_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% BLUE LAYER
+image1 = handles.data1;
+allBlack = zeros(size(image1,1),size(image1,2));
+
+blue = image1(:,:,1);
+iblue = cat(3,allBlack,allBlack,blue);
+
+axes(handles.axes3);
+imshow(iblue);
+handles.data3 = iblue;
+guidata(hObject,handles);
+% BLUE LAYER
+image2 = handles.data2;
+allBlack = zeros(size(image2,1),size(image2,2));
+
+blue = image2(:,:,1);
+iblue = cat(3,allBlack,allBlack,blue);
+
+axes(handles.axes3);
+imshow(iblue);
+handles.data3 = iblue;
+guidata(hObject,handles);
+
+
+
+% --- Executes on button press in pushbutton9.
+function pushbutton9_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% MIX LAYER
+image1 = handles.data1;
+allBlack = zeros(size(image1,1),size(image1,2));
+
+red = image1(:,:,1); 
+green = image1(:,:,1);  
+mix = cat(3,255-red,120-green,20-allBlack);
+
+axes(handles.axes3);
+imshow(mix);
+handles.data3 = mix;
+guidata(hObject,handles);
+% MIX LAYER
+image2 = handles.data2;
+allBlack = zeros(size(image2,1),size(image2,2));
+
+red = image2(:,:,1); 
+green = image2(:,:,1);  
+mix = cat(3,255-red,120-green,20-allBlack);
+
+axes(handles.axes3);
+imshow(mix);
+handles.data3 = mix;
+guidata(hObject,handles);
+
+
+
+% --- Executes on button press in pushbutton10.
+function pushbutton10_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% INVERS/NEGATIVE
+image1 = handles.data1; 
+invers=imcomplement(image1); 
+handles.data3 = invers; 
+axes(handles.axes3); 
+imshow(invers); 
+handles.data3 = invers; 
+guidata(hObject,handles);
+% INVERS/NEGATIVE
+image2 = handles.data2; 
+invers=imcomplement(image2); 
+handles.data3 = invers; 
+axes(handles.axes3); 
+imshow(invers); 
+handles.data3 = invers; 
+guidata(hObject,handles);
+
+
+% --- Executes on button press in pushbutton11.
+function pushbutton11_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% AND
+image1 = handles.data1;
+image2 = handles.data2;
+bw1 = im2bw(image1);
+bw2 = im2bw(image2);
+axes(handles.axes1);
+axes(handles.axes2);
+ 
+ 
+AandB = and(bw1, bw2);
+axes(handles.axes3);
+imshow(AandB);
+title('Hasil Logika AND');
+
+
+% --- Executes on button press in pushbutton12.
+function pushbutton12_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% OR
+image1 = handles.data1;
+image2 = handles.data2;
+bw1 = im2bw(image1);
+bw2 = im2bw(image2);
+axes(handles.axes1);
+axes(handles.axes2);
+ 
+ 
+AorB = or(bw1, bw2);
+axes(handles.axes3);
+imshow(AorB);
+title('Hasil Logika OR');
+
+
+% --- Executes on button press in pushbutton13.
+function pushbutton13_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% NOT
+image1 = handles.data1;
+bw1 = im2bw(image1);
+not1 = not(bw1);
+axes(handles.axes1);
+imshow(not1);
+title('Hasil Logika NOT');
+ 
+carifoto2 = handles.data2;
+bw2 = im2bw(carifoto2);
+not2 = not(bw2);
+axes(handles.axes2);
+imshow(not2);
+title('Hasil Logika NOT');
+
+
+
+% --- Executes on button press in pushbutton14.
+function pushbutton14_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton14 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% XOR
+image1 = handles.data1;
+image2 = handles.data2;
+bw1 = im2bw(image1);
+bw2 = im2bw(image2);
+axes(handles.axes1);
+axes(handles.axes2);
+ 
+ 
+AxorB = xor(bw1, bw2);
+axes(handles.axes3);
+imshow(AxorB);
+title('Hasil Logika XOR');
+
+
+% --- Executes on button press in pushbutton15.
+function pushbutton15_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton15 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton16.
+function pushbutton16_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton16 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+clear;
+[filename,pathname] = uigetfile({'*.jpg;*.bmp'},'Select an Image');
+Image1 = imread([pathname filename]);
+[filename,pathname] = uigetfile({'*.jpg;*.bmp'},'Select an Image');
+Image2 = imread([pathname filename]);
+resultImage = Image1Image2;
+figure(1)
+imshow(Image1)
+figure(2)
+imshow(Image2)
+figure(3)
+imshow(resultImage)
+
+% --- Executes on button press in pushbutton17.
+function pushbutton17_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton18.
+function pushbutton18_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton18 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
